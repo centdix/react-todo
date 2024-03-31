@@ -2,6 +2,18 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 
+function TodoItem(props) {
+  return (
+    <div className='list-item'>
+      <span className="list-text">{props.todo}</span>
+      <button
+        onClick={props.onDelete}
+        className='delete-button'
+      >delete</button>
+    </div>
+  )
+}
+
 function App() {
   const [todos, setTodos] = useState([]);
 
@@ -23,20 +35,15 @@ function App() {
           className='list'
         >
           {todos.map((todo, index) => (
-            <div
+            <TodoItem
               key={index}
-              className='list-item'
-            >
-                <span className="list-text">{todo}</span>
-                <button
-                  onClick={() => {
-                    const newTodos = [...todos];
-                    newTodos.splice(index, 1);
-                    setTodos(newTodos);
-                  }}
-                  className='delete-button'
-                >delete</button>
-            </div>
+              todo={todo}
+              onDelete={() => {
+                const newTodos = [...todos];
+                newTodos.splice(index, 1);
+                setTodos(newTodos);
+              }}
+            />
           ))}
         </div>
     </div>
