@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import { TextField, List, ListItem, IconButton, ListItemText } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function TodoItem(props) {
   return (
@@ -20,7 +22,7 @@ function App() {
   return (
     <div className='container'>
         <h1>Todo App</h1>
-        <input
+        <TextField
           type="text"
           placeholder="Enter a todo"
           onKeyDown={(e) => {
@@ -29,23 +31,36 @@ function App() {
               e.target.value = "";
             }
           }}
-          className='input'
         />
-        <div
-          className='list'
-        >
+        <List style={{
+          width: '100%',
+          maxWidth: 360,
+          backgroundColor: 'white',
+          marginTop: 10
+        }}>
+
           {todos.map((todo, index) => (
-            <TodoItem
+            <ListItem
               key={index}
-              todo={todo}
-              onDelete={() => {
-                const newTodos = [...todos];
-                newTodos.splice(index, 1);
-                setTodos(newTodos);
+              secondaryAction={
+                <IconButton onClick={() => {
+                  const newTodos = [...todos];
+                  newTodos.splice(index, 1);
+                  setTodos(newTodos);
+                }}>
+                  <DeleteIcon />
+                </IconButton>
+              }
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
               }}
-            />
+            >
+              <ListItemText primary={todo} />
+            </ListItem>
           ))}
-        </div>
+        </List>
     </div>
   );
 }
